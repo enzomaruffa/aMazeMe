@@ -15,6 +15,8 @@
 		47A70F6A22D4C071005BB824 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 47A70F6822D4C071005BB824 /* Main.storyboard */; };
 		47A70F6C22D4C075005BB824 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 47A70F6B22D4C075005BB824 /* Assets.xcassets */; };
 		47A70F6F22D4C075005BB824 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 47A70F6D22D4C075005BB824 /* LaunchScreen.storyboard */; };
+		47A70F7822D4D663005BB824 /* SKNodeExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A70F7622D4D663005BB824 /* SKNodeExtensions.swift */; };
+		47A70F7922D4D663005BB824 /* CGPointVectorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A70F7722D4D663005BB824 /* CGPointVectorExtensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +30,8 @@
 		47A70F6B22D4C075005BB824 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		47A70F6E22D4C075005BB824 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		47A70F7022D4C075005BB824 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		47A70F7622D4D663005BB824 /* SKNodeExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKNodeExtensions.swift; sourceTree = "<group>"; };
+		47A70F7722D4D663005BB824 /* CGPointVectorExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGPointVectorExtensions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +64,8 @@
 		47A70F5D22D4C071005BB824 /* aMazeMe */ = {
 			isa = PBXGroup;
 			children = (
+				47A70F7722D4D663005BB824 /* CGPointVectorExtensions.swift */,
+				47A70F7622D4D663005BB824 /* SKNodeExtensions.swift */,
 				47A70F5E22D4C071005BB824 /* AppDelegate.swift */,
 				47A70F6022D4C071005BB824 /* GameScene.sks */,
 				47A70F6222D4C071005BB824 /* Actions.sks */,
@@ -146,7 +152,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				47A70F7922D4D663005BB824 /* CGPointVectorExtensions.swift in Sources */,
 				47A70F6522D4C071005BB824 /* GameScene.swift in Sources */,
+				47A70F7822D4D663005BB824 /* SKNodeExtensions.swift in Sources */,
 				47A70F6722D4C071005BB824 /* GameViewController.swift in Sources */,
 				47A70F5F22D4C071005BB824 /* AppDelegate.swift in Sources */,
 			);
