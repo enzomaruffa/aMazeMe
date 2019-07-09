@@ -17,6 +17,8 @@
 		47A70F6F22D4C075005BB824 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 47A70F6D22D4C075005BB824 /* LaunchScreen.storyboard */; };
 		47A70F7822D4D663005BB824 /* SKNodeExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A70F7622D4D663005BB824 /* SKNodeExtensions.swift */; };
 		47A70F7922D4D663005BB824 /* CGPointVectorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A70F7722D4D663005BB824 /* CGPointVectorExtensions.swift */; };
+		47A70F7B22D4D82F005BB824 /* Maze.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A70F7A22D4D82F005BB824 /* Maze.swift */; };
+		47A70F7D22D4D8AB005BB824 /* MazeTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A70F7C22D4D8AB005BB824 /* MazeTile.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +34,8 @@
 		47A70F7022D4C075005BB824 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		47A70F7622D4D663005BB824 /* SKNodeExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKNodeExtensions.swift; sourceTree = "<group>"; };
 		47A70F7722D4D663005BB824 /* CGPointVectorExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGPointVectorExtensions.swift; sourceTree = "<group>"; };
+		47A70F7A22D4D82F005BB824 /* Maze.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Maze.swift; sourceTree = "<group>"; };
+		47A70F7C22D4D8AB005BB824 /* MazeTile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MazeTile.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,6 +79,8 @@
 				47A70F6B22D4C075005BB824 /* Assets.xcassets */,
 				47A70F6D22D4C075005BB824 /* LaunchScreen.storyboard */,
 				47A70F7022D4C075005BB824 /* Info.plist */,
+				47A70F7A22D4D82F005BB824 /* Maze.swift */,
+				47A70F7C22D4D8AB005BB824 /* MazeTile.swift */,
 			);
 			path = aMazeMe;
 			sourceTree = "<group>";
@@ -154,6 +160,8 @@
 			files = (
 				47A70F7922D4D663005BB824 /* CGPointVectorExtensions.swift in Sources */,
 				47A70F6522D4C071005BB824 /* GameScene.swift in Sources */,
+				47A70F7D22D4D8AB005BB824 /* MazeTile.swift in Sources */,
+				47A70F7B22D4D82F005BB824 /* Maze.swift in Sources */,
 				47A70F7822D4D663005BB824 /* SKNodeExtensions.swift in Sources */,
 				47A70F6722D4C071005BB824 /* GameViewController.swift in Sources */,
 				47A70F5F22D4C071005BB824 /* AppDelegate.swift in Sources */,

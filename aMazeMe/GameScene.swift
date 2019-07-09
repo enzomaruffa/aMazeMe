@@ -11,9 +11,12 @@ import GameplayKit
 
 class GameScene: SKScene {
     
-    let ballRadius: CGFloat = 15
+    let ballRadius: CGFloat = 20
     
     var ball: SKShapeNode!
+    
+    let wallSize: CGFloat = 20 * 2 + 20
+    let tileSize: CGFloat = 20 * 2 + 20
     
     override func didMove(to view: SKView) {
         
@@ -25,8 +28,51 @@ class GameScene: SKScene {
         ball.physicsBody?.mass = 100
         ball.physicsBody?.friction = 0.7
         ball.physicsBody?.linearDamping = 0.6
+        ball.zPosition = 5
+        
         
         scene?.addChild(ball)
+        
+        let maze = Maze()
+        
+        let halfWidth: CGFloat = CGFloat(maze.width / 2)
+        let halfHeight: CGFloat = CGFloat(maze.height / 2)
+        let mazeNodesWidth = (ceil(halfWidth) * wallSize) + (floor(halfWidth) * tileSize)
+        let mazeNodesHeight = (ceil(halfHeight) * wallSize) + (floor(halfHeight) * tileSize)
+        
+        var position: CGPoint = CGPoint(x: -mazeNodesWidth/2, y: -mazeNodesHeight/2)
+        var node: SKShapeNode
+        
+        for tileRow in maze.matrix {
+            for tile in tileRow {
+                
+                if tile == .Wall {
+                    node = SKShapeNode(rectOf: CGSize(width: wallSize, height: wallSize))
+                    node.position = position
+                    node.fillColor = .red
+                    node.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: wallSize, height: wallSize))
+                    node.physicsBody?.pinned = true
+                    node.physicsBody?.allowsRotation = false
+                    node.physicsBody?.restitution = 0
+                    position = CGPoint(x: position.x, y: position.y + wallSize)
+                    scene?.addChild(node)
+                } else if tile == .EmptyWall {
+                    node = SKShapeNode(rectOf: CGSize(width: wallSize, height: wallSize))
+                    node.position = position
+                    node.fillColor = .white
+                    position = CGPoint(x: position.x, y: position.y + wallSize)
+                    scene?.addChild(node)
+                } else if tile == .EmptyTile {
+                    node = SKShapeNode(rectOf: CGSize(width: tileSize, height: tileSize))
+                    node.position = position
+                    node.fillColor = .white
+                    position = CGPoint(x: position.x, y: position.y + tileSize)
+                    scene?.addChild(node)
+                }
+                
+            }
+            position = CGPoint(x: position.x + tileSize, y: -mazeNodesHeight/2)
+        }
         
     }
     
