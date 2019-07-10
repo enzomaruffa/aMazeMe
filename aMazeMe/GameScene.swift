@@ -11,69 +11,118 @@ import GameplayKit
 
 class GameScene: SKScene {
     
-    let ballRadius: CGFloat = 20
+    var ballRadius: CGFloat!
     
     var ball: SKShapeNode!
     
-    let wallSize: CGFloat = 20 * 2 + 20
-    let tileSize: CGFloat = 20 * 2 + 20
+    var wallWidth: CGFloat!
+    var tileSize: CGFloat!
     
     override func didMove(to view: SKView) {
+        
+        ballRadius = 15
+        wallWidth = 3
+        tileSize = (ballRadius * 2) + (wallWidth * 2)
         
         scene?.physicsWorld.gravity = CGVector(dx: 0, dy: 0)
         
         ball = SKShapeNode(circleOfRadius: ballRadius)
-        ball.fillColor = .red
-        ball.physicsBody = SKPhysicsBody(circleOfRadius: ballRadius)
-        ball.physicsBody?.mass = 100
-        ball.physicsBody?.friction = 0.7
-        ball.physicsBody?.linearDamping = 0.6
-        ball.zPosition = 5
-        
-        
+        setBallProperties(ball: ball)
         scene?.addChild(ball)
         
         let maze = Maze()
         
-        let halfWidth: CGFloat = CGFloat(maze.width / 2)
-        let halfHeight: CGFloat = CGFloat(maze.height / 2)
-        let mazeNodesWidth = (ceil(halfWidth) * wallSize) + (floor(halfWidth) * tileSize)
-        let mazeNodesHeight = (ceil(halfHeight) * wallSize) + (floor(halfHeight) * tileSize)
+        let halfMazeWidth: CGFloat = CGFloat(maze.width / 2)
+        let halfMazeHeight: CGFloat = CGFloat(maze.height / 2)
+        let mazeNodesWidth =  (floor(halfMazeWidth) * tileSize)
+        let mazeNodesHeight = (floor(halfMazeHeight) * tileSize)
         
-        var position: CGPoint = CGPoint(x: -mazeNodesWidth/2, y: -mazeNodesHeight/2)
-        var node: SKShapeNode
+        var position: CGPoint = CGPoint(x: -mazeNodesHeight, y: -mazeNodesWidth)
+        var tileNode: SKShapeNode
+        var wallNode: SKShapeNode
         
         for tileRow in maze.matrix {
             for tile in tileRow {
                 
-                if tile == .Wall {
-                    node = SKShapeNode(rectOf: CGSize(width: wallSize, height: wallSize))
-                    node.position = position
-                    node.fillColor = .red
-                    node.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: wallSize, height: wallSize))
-                    node.physicsBody?.pinned = true
-                    node.physicsBody?.allowsRotation = false
-                    node.physicsBody?.restitution = 0
-                    position = CGPoint(x: position.x, y: position.y + wallSize)
-                    scene?.addChild(node)
-                } else if tile == .EmptyWall {
-                    node = SKShapeNode(rectOf: CGSize(width: wallSize, height: wallSize))
-                    node.position = position
-                    node.fillColor = .white
-                    position = CGPoint(x: position.x, y: position.y + wallSize)
-                    scene?.addChild(node)
-                } else if tile == .EmptyTile {
-                    node = SKShapeNode(rectOf: CGSize(width: tileSize, height: tileSize))
-                    node.position = position
-                    node.fillColor = .white
-                    position = CGPoint(x: position.x, y: position.y + tileSize)
-                    scene?.addChild(node)
+                tileNode = SKShapeNode(rectOf: CGSize(width: tileSize, height: tileSize))
+                tileNode.fillColor = .black
+                tileNode.strokeColor = .black
+                
+                // Add walls
+                if tile.walls.contains(.left) {
+                    let wallSize = CGSize(width: wallWidth, height: tileSize + wallWidth)
+                    wallNode = SKShapeNode(rectOf: wallSize)
+                    wallNode.physicsBody = SKPhysicsBody(rectangleOf: wallSize)
+                    
+                    setWallProperties(wall: wallNode)
+                    
+                    wallNode.position = CGPoint(x: -tileSize/2, y: 0)
+                    tileNode.addChild(wallNode)
                 }
                 
+                if tile.walls.contains(.top) {
+                    let wallSize = CGSize(width: tileSize + wallWidth, height: wallWidth)
+                    wallNode = SKShapeNode(rectOf: wallSize)
+                    wallNode.physicsBody = SKPhysicsBody(rectangleOf: wallSize)
+                    
+                    setWallProperties(wall: wallNode)
+                    
+                    wallNode.position = CGPoint(x: 0, y: -tileSize/2)
+                    tileNode.addChild(wallNode)
+                }
+                
+                if tile.walls.contains(.right) {
+                    let wallSize = CGSize(width: wallWidth, height: tileSize + wallWidth)
+                    wallNode = SKShapeNode(rectOf: wallSize)
+                    wallNode.physicsBody = SKPhysicsBody(rectangleOf: wallSize)
+                    
+                    setWallProperties(wall: wallNode)
+                    
+                    wallNode.position = CGPoint(x: tileSize/2, y: 0)
+                    tileNode.addChild(wallNode)
+                }
+                
+                if tile.walls.contains(.bottom) {
+                    let wallSize = CGSize(width: tileSize + wallWidth, height: wallWidth)
+                    wallNode = SKShapeNode(rectOf: wallSize)
+                    wallNode.physicsBody = SKPhysicsBody(rectangleOf: wallSize)
+                    
+                    setWallProperties(wall: wallNode)
+                    
+                    wallNode.position = CGPoint(x: 0, y: tileSize/2)
+                    tileNode.addChild(wallNode)
+                }
+            
+                tileNode.position = position
+                scene?.addChild(tileNode)
+                
+                position = CGPoint(x: position.x + tileSize, y: position.y)
             }
-            position = CGPoint(x: position.x + tileSize, y: -mazeNodesHeight/2)
+            position = CGPoint(x: -mazeNodesHeight, y: position.y + tileSize)
         }
         
+    }
+    
+    
+    func setBallProperties(ball: SKShapeNode) {
+        ball.fillColor = .yellow
+        ball.strokeColor = .yellow
+        ball.physicsBody = SKPhysicsBody(circleOfRadius: ballRadius)
+        ball.physicsBody?.mass = 100
+        ball.physicsBody?.friction = 0.7
+        ball.physicsBody?.linearDamping = 0.6
+        ball.physicsBody?.collisionBitMask = CollisionMasks.CollisionBall
+        ball.zPosition = 10
+    }
+    
+    func setWallProperties(wall: SKShapeNode) {
+        wall.fillColor = .white
+        wall.strokeColor = .white
+        wall.physicsBody?.mass = 10000
+        wall.physicsBody?.collisionBitMask = CollisionMasks.CollisionMapElement
+        wall.physicsBody?.allowsRotation = false
+        wall.physicsBody?.pinned = true
+        wall.zPosition = 7
     }
     
     

@@ -10,26 +10,24 @@ import Foundation
 
 class Maze {
     
-    var width: Int
-    var height: Int
+    var width: Int {
+        get {
+            return matrix[0].count
+        }
+    }
+    var height: Int {
+        get {
+            return matrix.count
+        }
+    }
     
-    var matrix: [[MazeTileType]]
+    var matrix: [[MazeTile]]
     
     init() {
-        width = 11
-        height = 11
         
-        matrix = [[.Wall, .Wall, .Wall, .Wall, .Wall, .EmptyWall, .Wall, .Wall, .Wall, .Wall, .Wall],
-                [.Wall, .EmptyTile, .Wall, .EmptyTile, .Wall, .EmptyTile, .Wall, .EmptyTile, .Wall, .EmptyTile, .Wall],
-                [.Wall, .Wall, .Wall, .Wall, .Wall, .EmptyTile, .Wall, .Wall, .Wall, .Wall, .Wall],
-                [.Wall, .EmptyTile, .Wall, .EmptyTile, .Wall, .EmptyTile, .Wall, .EmptyTile, .Wall, .EmptyTile, .Wall],
-                [.Wall, .Wall, .Wall, .Wall, .Wall, .EmptyTile, .Wall, .Wall, .Wall, .Wall, .Wall],
-                [.Wall, .EmptyTile, .Wall, .EmptyTile, .Wall, .EmptyTile, .Wall, .EmptyTile, .Wall, .EmptyTile, .Wall],
-                [.Wall, .Wall, .Wall, .Wall, .Wall, .EmptyTile, .Wall, .Wall, .Wall, .Wall, .Wall],
-                [.Wall, .EmptyTile, .Wall, .EmptyTile, .Wall, .EmptyTile, .Wall, .EmptyTile, .Wall, .EmptyTile, .Wall],
-                [.Wall, .Wall, .Wall, .Wall, .Wall, .EmptyTile, .Wall, .Wall, .Wall, .Wall, .Wall],
-                [.Wall, .EmptyTile, .Wall, .EmptyTile, .Wall, .EmptyTile, .Wall, .EmptyTile, .Wall, .EmptyTile, .Wall],
-                [.Wall, .Wall, .Wall, .Wall, .Wall, .EmptyWall, .Wall, .Wall, .Wall, .Wall, .Wall]]
+        matrix = [[MazeTile(walls: [.left, .top], type: .blank), MazeTile(walls: [.top], type: .blank), MazeTile(walls: [.right, .top], type: .blank)],
+               [MazeTile(walls: [.left], type: .blank), MazeTile(walls: [.right, .left, .bottom], type: .blank), MazeTile(walls: [.right], type: .blank)],
+        [MazeTile(walls: [.left, .bottom], type: .blank), MazeTile(walls: [.bottom], type: .blank), MazeTile(walls: [.right, .bottom], type: .blank)]]
     }
     
 }

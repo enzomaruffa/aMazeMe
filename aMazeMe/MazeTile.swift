@@ -1,5 +1,5 @@
 //
-//  MazeTileType.swift
+//  MazeTile.swift
 //  aMazeMe
 //
 //  Created by Enzo Maruffa Moreira on 09/07/19.
@@ -8,10 +8,14 @@
 
 import SpriteKit
 
-enum MazeTileType {
+class MazeTile {
     
-    case Wall
-    case EmptyWall
-    case EmptyTile
+    var walls: [WallPlace]
+    var type: MazeTileType
+    
+    internal init(walls: [WallPlace], type: MazeTileType) {
+        self.walls = walls
+        self.type = type
+    }
     
 }

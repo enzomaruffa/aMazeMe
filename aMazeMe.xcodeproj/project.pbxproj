@@ -19,6 +19,9 @@
 		47A70F7922D4D663005BB824 /* CGPointVectorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A70F7722D4D663005BB824 /* CGPointVectorExtensions.swift */; };
 		47A70F7B22D4D82F005BB824 /* Maze.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A70F7A22D4D82F005BB824 /* Maze.swift */; };
 		47A70F7D22D4D8AB005BB824 /* MazeTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A70F7C22D4D8AB005BB824 /* MazeTile.swift */; };
+		47A70F8522D66AB8005BB824 /* WallEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A70F8422D66AB7005BB824 /* WallEnums.swift */; };
+		47A70F8722D66AEF005BB824 /* MazeTileTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A70F8622D66AEF005BB824 /* MazeTileTypes.swift */; };
+		47A70F8922D66D05005BB824 /* CollisionMasks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A70F8822D66D05005BB824 /* CollisionMasks.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +39,9 @@
 		47A70F7722D4D663005BB824 /* CGPointVectorExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGPointVectorExtensions.swift; sourceTree = "<group>"; };
 		47A70F7A22D4D82F005BB824 /* Maze.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Maze.swift; sourceTree = "<group>"; };
 		47A70F7C22D4D8AB005BB824 /* MazeTile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MazeTile.swift; sourceTree = "<group>"; };
+		47A70F8422D66AB7005BB824 /* WallEnums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WallEnums.swift; sourceTree = "<group>"; };
+		47A70F8622D66AEF005BB824 /* MazeTileTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MazeTileTypes.swift; sourceTree = "<group>"; };
+		47A70F8822D66D05005BB824 /* CollisionMasks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollisionMasks.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +87,9 @@
 				47A70F7022D4C075005BB824 /* Info.plist */,
 				47A70F7A22D4D82F005BB824 /* Maze.swift */,
 				47A70F7C22D4D8AB005BB824 /* MazeTile.swift */,
+				47A70F8422D66AB7005BB824 /* WallEnums.swift */,
+				47A70F8622D66AEF005BB824 /* MazeTileTypes.swift */,
+				47A70F8822D66D05005BB824 /* CollisionMasks.swift */,
 			);
 			path = aMazeMe;
 			sourceTree = "<group>";
@@ -164,7 +173,10 @@
 				47A70F7B22D4D82F005BB824 /* Maze.swift in Sources */,
 				47A70F7822D4D663005BB824 /* SKNodeExtensions.swift in Sources */,
 				47A70F6722D4C071005BB824 /* GameViewController.swift in Sources */,
+				47A70F8722D66AEF005BB824 /* MazeTileTypes.swift in Sources */,
 				47A70F5F22D4C071005BB824 /* AppDelegate.swift in Sources */,
+				47A70F8922D66D05005BB824 /* CollisionMasks.swift in Sources */,
+				47A70F8522D66AB8005BB824 /* WallEnums.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
