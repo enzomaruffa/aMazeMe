@@ -53,6 +53,7 @@ class Maze: Codable {
         return maze
     }
     
+    // Reference: http://weblog.jamisbuck.org/2011/1/27/maze-generation-growing-tree-algorithm
     static func growingTreeMaze(size: CGSize) -> Maze {
         let maze = Maze(size: size)
         
@@ -63,13 +64,54 @@ class Maze: Codable {
             }
         }
         
-        let randomPosition = CGPoint.randomPoint(minX: 0, maxX: size.width-1, minY: 0, maxY: size.height-1)
-        let randomTile = maze.matrix[Int(randomPosition.y)][Int(randomPosition.x)]
+        var helperList: [CGPoint] = []
+        
+        for _ in 0..<(maze.width * maze.height) {
+            if helperList.isEmpty {
+                
+                // Finds a random position that's currently not visited
+                var randomPosition = CGPoint.randomPoint(minX: 0, maxX: size.width-1, minY: 0, maxY: size.height-1)
+                var randomTile = maze.tile(in: randomPosition)
+                
+                while randomTile.status != .normal {
+                    randomPosition = CGPoint.randomPoint(minX: 0, maxX: size.width-1, minY: 0, maxY: size.height-1)
+                    randomTile = maze.tile(in: randomPosition)
+                }
+                
+                randomTile.status = .visited
+                
+                helperList.append(randomPosition)
+                
+            } else {
+                
+                // Changing this logic completely changes the maze!
+                let lastTilePosition = helperList.last!
+                
+                let unvisitedNeighboursPositions = maze.getTileNeighbours(in: lastTilePosition).filter( { maze.tile(in: $0).status == .normal } )
+                
+                // Gotta backtrack
+                if unvisitedNeighboursPositions.isEmpty {
+                    // Mark this tile as visited
+                    // Remove it from the list
+                } else {
+                    // Get neighbour tile randomly
+                    // Open walls between two tiles
+                    // Add neighbour tile to list
+                    
+                }
+                
+            }
+        }
+        
         
         return maze
     }
     
-    func getCellNeighbours(in position: CGPoint) -> [CGPoint] {
+    func tile(in position: CGPoint) -> MazeTile {
+        return self.matrix[Int(position.y)][Int(position.x)]
+    }
+    
+    func getTileNeighbours(in position: CGPoint) -> [CGPoint] {
         var neighbours: [CGPoint] = []
         
         if position.x != 0 {
