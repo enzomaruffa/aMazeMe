@@ -29,7 +29,16 @@ class MazeTile: Codable {
             walls.append(baseWalls.remove(at: randomIndex))
         }
         
-        return MazeTile(walls: walls, type: .blank)
+        let type = Int.random(in: 0..<100)
+        
+        var tileType = MazeTileType.blank
+        
+        if type == 0 {
+            tileType = .completion
+        } else if type > 0 && type < 4 {
+            tileType = .hole
+        }
+        return MazeTile(walls: walls, type: tileType)
         
     }
 }

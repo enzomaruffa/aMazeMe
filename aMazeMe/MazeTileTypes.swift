@@ -11,4 +11,5 @@ import Foundation
 enum MazeTileType: Int, Codable {
     case blank
     case hole
+    case completion
 }

@@ -31,7 +31,7 @@ class Maze: Codable {
 //               [MazeTile(walls: [.left], type: .blank), MazeTile(walls: [.right, .left, .bottom], type: .blank), MazeTile(walls: [.right], type: .blank)],
 //        [MazeTile(walls: [.left, .bottom], type: .blank), MazeTile(walls: [.bottom], type: .blank), MazeTile(walls: [.right, .bottom], type: .blank)]]
         
-        let randomSize = 40
+        let randomSize = 35
         
         for i in 0...randomSize {
             matrix.append([])

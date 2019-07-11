@@ -48,12 +48,25 @@ class GameScene: SKScene {
             for tile in tileRow {
                 
                 tileNode = SKShapeNode(rectOf: CGSize(width: tileSize, height: tileSize))
-                tileNode.fillColor = .black
-                tileNode.strokeColor = .black
+                
+                if tile.type == .blank {
+                    tileNode.fillColor = .black
+                    tileNode.strokeColor = .black
+                } else if tile.type == .completion {
+                    tileNode.fillColor = .yellow
+                    tileNode.strokeColor = .black
+                } else if tile.type == .hole {
+                    let holeNode = SKShapeNode(circleOfRadius: ballRadius)
+                    holeNode.fillColor = .white
+                    tileNode.addChild(holeNode)
+                    
+                    tileNode.fillColor = .black
+                    tileNode.strokeColor = .black
+                }
                 
                 // Add walls
                 if tile.walls.contains(.left) {
-                    let wallSize = CGSize(width: wallWidth, height: tileSize + wallWidth)
+                    let wallSize = CGSize(width: wallWidth, height: tileSize + wallWidth/2)
                     wallNode = SKShapeNode(rectOf: wallSize)
                     wallNode.physicsBody = SKPhysicsBody(rectangleOf: wallSize)
                     
@@ -64,7 +77,7 @@ class GameScene: SKScene {
                 }
                 
                 if tile.walls.contains(.top) {
-                    let wallSize = CGSize(width: tileSize + wallWidth, height: wallWidth)
+                    let wallSize = CGSize(width: tileSize + wallWidth/2, height: wallWidth)
                     wallNode = SKShapeNode(rectOf: wallSize)
                     wallNode.physicsBody = SKPhysicsBody(rectangleOf: wallSize)
                     
@@ -75,7 +88,7 @@ class GameScene: SKScene {
                 }
                 
                 if tile.walls.contains(.right) {
-                    let wallSize = CGSize(width: wallWidth, height: tileSize + wallWidth)
+                    let wallSize = CGSize(width: wallWidth, height: tileSize + wallWidth/2)
                     wallNode = SKShapeNode(rectOf: wallSize)
                     wallNode.physicsBody = SKPhysicsBody(rectangleOf: wallSize)
                     
@@ -86,7 +99,7 @@ class GameScene: SKScene {
                 }
                 
                 if tile.walls.contains(.bottom) {
-                    let wallSize = CGSize(width: tileSize + wallWidth, height: wallWidth)
+                    let wallSize = CGSize(width: tileSize + wallWidth/2, height: wallWidth)
                     wallNode = SKShapeNode(rectOf: wallSize)
                     wallNode.physicsBody = SKPhysicsBody(rectangleOf: wallSize)
                     
@@ -163,7 +176,7 @@ class GameScene: SKScene {
     
     override func update(_ currentTime: TimeInterval) {
         // Called before each frame is rendered
-        cameraNode.position = ball.position
+        //cameraNode.position = ball.position
     }
     
     func updateGravity(gravity: CGVector) {
