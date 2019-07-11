@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Maze {
+class Maze: Codable {
     
     var width: Int {
         get {
@@ -25,9 +25,23 @@ class Maze {
     
     init() {
         
-        matrix = [[MazeTile(walls: [.left, .top], type: .blank), MazeTile(walls: [.top], type: .blank), MazeTile(walls: [.right, .top], type: .blank)],
-               [MazeTile(walls: [.left], type: .blank), MazeTile(walls: [.right, .left, .bottom], type: .blank), MazeTile(walls: [.right], type: .blank)],
-        [MazeTile(walls: [.left, .bottom], type: .blank), MazeTile(walls: [.bottom], type: .blank), MazeTile(walls: [.right, .bottom], type: .blank)]]
+        matrix = []
+        
+//        matrix = [[MazeTile(walls: [.left, .top], type: .blank), MazeTile(walls: [.top], type: .blank), MazeTile(walls: [.right, .top], type: .blank)],
+//               [MazeTile(walls: [.left], type: .blank), MazeTile(walls: [.right, .left, .bottom], type: .blank), MazeTile(walls: [.right], type: .blank)],
+//        [MazeTile(walls: [.left, .bottom], type: .blank), MazeTile(walls: [.bottom], type: .blank), MazeTile(walls: [.right, .bottom], type: .blank)]]
+        
+        let randomSize = 40
+        
+        for i in 0...randomSize {
+            matrix.append([])
+            for _ in 0...randomSize {
+                matrix[i].append(MazeTile.randomMazeTile())
+            }
+        }
+        
     }
+    
+    
     
 }

@@ -18,11 +18,14 @@ class GameScene: SKScene {
     var wallWidth: CGFloat!
     var tileSize: CGFloat!
     
+    
+    var cameraNode : SKCameraNode!
+    
     override func didMove(to view: SKView) {
         
         ballRadius = 15
         wallWidth = 3
-        tileSize = (ballRadius * 2) + (wallWidth * 2)
+        tileSize = (ballRadius * 2) + (wallWidth * 2) + CGFloat(15)
         
         scene?.physicsWorld.gravity = CGVector(dx: 0, dy: 0)
         
@@ -101,6 +104,12 @@ class GameScene: SKScene {
             position = CGPoint(x: -mazeNodesHeight, y: position.y + tileSize)
         }
         
+        
+        cameraNode = SKCameraNode()
+        cameraNode.position = .zero
+        scene!.addChild(cameraNode)
+        scene!.camera = cameraNode
+        
     }
     
     
@@ -120,8 +129,8 @@ class GameScene: SKScene {
         wall.strokeColor = .white
         wall.physicsBody?.mass = 10000
         wall.physicsBody?.collisionBitMask = CollisionMasks.CollisionMapElement
+        wall.physicsBody?.isDynamic = false
         wall.physicsBody?.allowsRotation = false
-        wall.physicsBody?.pinned = true
         wall.zPosition = 7
     }
     
@@ -154,6 +163,7 @@ class GameScene: SKScene {
     
     override func update(_ currentTime: TimeInterval) {
         // Called before each frame is rendered
+        cameraNode.position = ball.position
     }
     
     func updateGravity(gravity: CGVector) {

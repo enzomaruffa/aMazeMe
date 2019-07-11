@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum MazeTileType {
+enum MazeTileType: Int, Codable {
     case blank
     case hole
 }

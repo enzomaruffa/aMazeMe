@@ -8,7 +8,7 @@
 
 import SpriteKit
 
-class MazeTile {
+class MazeTile: Codable {
     
     var walls: [WallPlace]
     var type: MazeTileType
@@ -18,4 +18,18 @@ class MazeTile {
         self.type = type
     }
     
+    static func randomMazeTile() -> MazeTile {
+        let wallsCount = Int.random(in: 0...2)
+        var walls: [WallPlace] = []
+        
+        var baseWalls: [WallPlace] = [.left, .right, .top, .bottom]
+        
+        for _ in 0..<wallsCount {
+            let randomIndex = Int.random(in: 0..<baseWalls.count)
+            walls.append(baseWalls.remove(at: randomIndex))
+        }
+        
+        return MazeTile(walls: walls, type: .blank)
+        
+    }
 }

@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum WallPlace {
+enum WallPlace: Int, Codable {
     case left
     case right
     case top
