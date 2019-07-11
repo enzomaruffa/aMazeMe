@@ -33,7 +33,7 @@ class GameScene: SKScene {
         setBallProperties(ball: ball)
         scene?.addChild(ball)
         
-        let maze = Maze()
+        let maze = Maze.fullyRandomMaze(size: 35)
         
         let halfMazeWidth: CGFloat = CGFloat(maze.width / 2)
         let halfMazeHeight: CGFloat = CGFloat(maze.height / 2)

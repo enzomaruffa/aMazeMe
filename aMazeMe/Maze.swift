@@ -23,25 +23,42 @@ class Maze: Codable {
     
     var matrix: [[MazeTile]]
     
-    init() {
+    init(size: Int) {
         
         matrix = []
         
-//        matrix = [[MazeTile(walls: [.left, .top], type: .blank), MazeTile(walls: [.top], type: .blank), MazeTile(walls: [.right, .top], type: .blank)],
-//               [MazeTile(walls: [.left], type: .blank), MazeTile(walls: [.right, .left, .bottom], type: .blank), MazeTile(walls: [.right], type: .blank)],
-//        [MazeTile(walls: [.left, .bottom], type: .blank), MazeTile(walls: [.bottom], type: .blank), MazeTile(walls: [.right, .bottom], type: .blank)]]
-        
-        let randomSize = 35
-        
-        for i in 0...randomSize {
+        for i in 0...size {
             matrix.append([])
-            for _ in 0...randomSize {
-                matrix[i].append(MazeTile.randomMazeTile())
+            for _ in 0...size {
+                matrix[i].append(MazeTile())
             }
         }
         
     }
     
+    static func fullyRandomMaze(size: Int) -> Maze {
+        let maze = Maze(size: size)
+        
+        for tileRow in maze.matrix {
+            for tile in tileRow {
+                tile.randomize()
+            }
+        }
+        
+        return maze
+    }
     
+    static func growingTreeMaze(size: Int) -> Maze {
+        let maze = Maze(size: size)
+        
+        for tileRow in maze.matrix {
+            for tile in tileRow {
+                tile.randomize()
+            }
+        }
+        
+        return maze
+    }
     
 }
+
