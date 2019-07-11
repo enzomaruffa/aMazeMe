@@ -12,15 +12,18 @@ class MazeTile: Codable {
     
     var walls: [WallPlace]
     var type: MazeTileType
+    var status: MazeTileStatus
     
     init(walls: [WallPlace], type: MazeTileType) {
         self.walls = walls
         self.type = type
+        self.status = .normal
     }
     
     init() {
         self.walls = []
         self.type = .blank
+        self.status = .normal
     }
     
     static func randomMazeTile() -> MazeTile {
@@ -54,6 +57,22 @@ class MazeTile: Codable {
         self.walls = [.top, .right, .left, .bottom]
     }
     
+    func openWall(wallType: WallPlace) {
+        changeWall(wallType: wallType, closed: false)
+    }
+    
+    func closeWall(wallType: WallPlace) {
+        changeWall(wallType: wallType, closed: true)
+    }
+    
+    func changeWall(wallType: WallPlace, closed: Bool) {
+        if closed {
+            self.walls.contains(wallType) ? nil : walls.append(wallType)
+        } else {
+            walls.removeAll(where: { $0 == wallType } )
+        }
+    }
+    
     func blank() {
         self.type = .blank
     }
@@ -75,10 +94,12 @@ class MazeTile: Codable {
         
         for _ in 0..<wallsCount {
             let randomIndex = Int.random(in: 0..<baseWalls.count)
-            walls.append(baseWalls.remove(at: randomIndex))
+            let wallPlace = baseWalls.remove(at: randomIndex)
+            self.closeWall(wallType: wallPlace)
         }
         
         let type = Int.random(in: 0..<100)
+        
         var tileType = MazeTileType.blank
         
         if type == 0 {

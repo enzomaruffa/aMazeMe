@@ -72,13 +72,13 @@ class GameViewController: UIViewController {
             self.timer = Timer.scheduledTimer(withTimeInterval: (1.0/60.0),
                                repeats: true, block: { (timer) in
                                 // Get the accelerometer data.
-                                print("Running timer iteration")
+                                //print("Running timer iteration")
                                 if let data = self.motion.accelerometerData {
                                     let x = data.acceleration.x
                                     let y = data.acceleration.y
-                                    let z = data.acceleration.z
+                                    //let z = data.acceleration.z
                                     
-                                    print(x, y)
+                                    //print(x, y)
                                     
                                     // Use the accelerometer data in your app.
                                     if let scene = self.gameScene {

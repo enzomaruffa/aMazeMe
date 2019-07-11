@@ -6,7 +6,7 @@
 //  Copyright © 2019 Enzo Maruffa Moreira. All rights reserved.
 //
 
-import Foundation
+import SpriteKit
 
 class Maze: Codable {
     
@@ -21,22 +21,27 @@ class Maze: Codable {
         }
     }
     
+    var startingPosition: CGPoint
+    
     var matrix: [[MazeTile]]
     
-    init(size: Int) {
+    init(size: CGSize) {
         
         matrix = []
         
-        for i in 0...size {
+        for i in 0..<Int(size.height) {
             matrix.append([])
-            for _ in 0...size {
+            for _ in 0..<Int(size.width) {
                 matrix[i].append(MazeTile())
             }
         }
         
+        startingPosition = .zero
+        
+        
     }
     
-    static func fullyRandomMaze(size: Int) -> Maze {
+    static func fullyRandomMaze(size: CGSize) -> Maze {
         let maze = Maze(size: size)
         
         for tileRow in maze.matrix {
@@ -48,16 +53,39 @@ class Maze: Codable {
         return maze
     }
     
-    static func growingTreeMaze(size: Int) -> Maze {
+    static func growingTreeMaze(size: CGSize) -> Maze {
         let maze = Maze(size: size)
         
+        // Initializes the maze with all walls closed
         for tileRow in maze.matrix {
             for tile in tileRow {
-                tile.randomize()
+                tile.closeWalls()
             }
         }
         
+        let randomPosition = CGPoint.randomPoint(minX: 0, maxX: size.width-1, minY: 0, maxY: size.height-1)
+        let randomTile = maze.matrix[Int(randomPosition.y)][Int(randomPosition.x)]
+        
         return maze
+    }
+    
+    func getCellNeighbours(in position: CGPoint) -> [CGPoint] {
+        var neighbours: [CGPoint] = []
+        
+        if position.x != 0 {
+            neighbours.append(CGPoint(x: position.x-1, y: position.y))
+        }
+        if position.y != 0 {
+            neighbours.append(CGPoint(x: position.x, y: position.y-1))
+        }
+        if position.x != CGFloat(self.width-1) {
+            neighbours.append(CGPoint(x: position.x+1, y: position.y))
+        }
+        if position.y != CGFloat(self.height-1) {
+            neighbours.append(CGPoint(x: position.x, y: position.y+1))
+        }
+        
+        return neighbours
     }
     
 }

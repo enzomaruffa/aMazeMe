@@ -18,10 +18,11 @@ class GameScene: SKScene {
     var wallWidth: CGFloat!
     var tileSize: CGFloat!
     
-    
     var cameraNode : SKCameraNode!
     
     override func didMove(to view: SKView) {
+        
+        self.backgroundColor = .black
         
         ballRadius = 15
         wallWidth = 3
@@ -33,14 +34,9 @@ class GameScene: SKScene {
         setBallProperties(ball: ball)
         scene?.addChild(ball)
         
-        let maze = Maze.fullyRandomMaze(size: 35)
-        
-        let halfMazeWidth: CGFloat = CGFloat(maze.width / 2)
-        let halfMazeHeight: CGFloat = CGFloat(maze.height / 2)
-        let mazeNodesWidth =  (floor(halfMazeWidth) * tileSize)
-        let mazeNodesHeight = (floor(halfMazeHeight) * tileSize)
-        
-        var position: CGPoint = CGPoint(x: -mazeNodesHeight, y: -mazeNodesWidth)
+        let maze = Maze.fullyRandomMaze(size: CGSize(width: 11, height: 23))
+    
+        var position: CGPoint = .zero
         var tileNode: SKShapeNode
         var wallNode: SKShapeNode
         
@@ -48,6 +44,8 @@ class GameScene: SKScene {
             for tile in tileRow {
                 
                 tileNode = SKShapeNode(rectOf: CGSize(width: tileSize, height: tileSize))
+                tileNode.zPosition = 3
+                
                 
                 if tile.type == .blank {
                     tileNode.fillColor = .black
@@ -114,12 +112,12 @@ class GameScene: SKScene {
                 
                 position = CGPoint(x: position.x + tileSize, y: position.y)
             }
-            position = CGPoint(x: -mazeNodesHeight, y: position.y + tileSize)
+            position = CGPoint(x: 0, y: position.y + tileSize)
         }
         
-        
+        let mazeCenter = CGPoint(x: tileSize * CGFloat(maze.width-1), y: tileSize * CGFloat(maze.height-1))/2
         cameraNode = SKCameraNode()
-        cameraNode.position = .zero
+        cameraNode.position = mazeCenter
         scene!.addChild(cameraNode)
         scene!.camera = cameraNode
         
