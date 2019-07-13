@@ -10,17 +10,25 @@ import SpriteKit
 
 class MazeTile: Codable {
     
+    static var nextId: Int = 0
+    var id: Int
     var walls: [WallPlace]
     var type: MazeTileType
     var status: MazeTileStatus
     
     init(walls: [WallPlace], type: MazeTileType) {
+        self.id = MazeTile.nextId
+        MazeTile.nextId += 1
+        
         self.walls = walls
         self.type = type
         self.status = .normal
     }
     
     init() {
+        self.id = MazeTile.nextId
+        MazeTile.nextId += 1
+        
         self.walls = []
         self.type = .blank
         self.status = .normal

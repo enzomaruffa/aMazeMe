@@ -67,14 +67,15 @@ class Maze: Codable {
         var helperList: [CGPoint] = []
         
         for _ in 0..<(maze.width * maze.height) {
-            if helperList.isEmpty {
+            print("Running another iteration")
+            if helperList.isEmpty { // First position
                 
                 // Finds a random position that's currently not visited
-                var randomPosition = CGPoint.randomPoint(minX: 0, maxX: size.width-1, minY: 0, maxY: size.height-1)
+                var randomPosition = CGPoint.randomRoundedPoint(minX: 0, maxX: Int(size.width-1), minY: 0, maxY: Int(size.height-1))
                 var randomTile = maze.tile(in: randomPosition)
                 
                 while randomTile.status != .normal {
-                    randomPosition = CGPoint.randomPoint(minX: 0, maxX: size.width-1, minY: 0, maxY: size.height-1)
+                    randomPosition = CGPoint.randomRoundedPoint(minX: 0, maxX: Int(size.width-1), minY: 0, maxY: Int(size.height-1))
                     randomTile = maze.tile(in: randomPosition)
                 }
                 
@@ -82,21 +83,59 @@ class Maze: Codable {
                 
                 helperList.append(randomPosition)
                 
+                print("Adding first position", randomPosition)
             } else {
                 
                 // Changing this logic completely changes the maze!
-                let lastTilePosition = helperList.last!
+                let selectedTilePosition = helperList.last!
                 
-                let unvisitedNeighboursPositions = maze.getTileNeighbours(in: lastTilePosition).filter( { maze.tile(in: $0).status == .normal } )
+                print("Selected position", selectedTilePosition)
+                
+                let unvisitedNeighboursPositions = maze.getTileNeighbours(in: selectedTilePosition).filter( { maze.tile(in: $0).status == .normal } )
                 
                 // Gotta backtrack
-                if unvisitedNeighboursPositions.isEmpty {
-                    // Mark this tile as visited
-                    // Remove it from the list
+                if unvisitedNeighboursPositions.isEmpty { // Every neighbour has already been visited
+                    
+                    print("    No neighbours, backtracking...")
+                    
+                    // Mark tile as visited
+                    let tile = maze.tile(in: selectedTilePosition)
+                    tile.status = .finished
+                    
+                    // Remove it from the helper list
+                    helperList.removeAll(where: { $0 == selectedTilePosition } )
                 } else {
                     // Get neighbour tile randomly
+                    let neighbourPosition = unvisitedNeighboursPositions.randomElement()!
+                    
+                    
+                    print("    Neighbour position", neighbourPosition)
                     // Open walls between two tiles
+                    let tile = maze.tile(in: selectedTilePosition)
+                    let neighbour = maze.tile(in: neighbourPosition)
+                    
+                    if neighbourPosition.y < selectedTilePosition.y { // Neighbour is on top
+                        tile.openWall(wallType: .top)
+                        neighbour.openWall(wallType: .bottom)
+                    } else if neighbourPosition.y > selectedTilePosition.y {  // Neighbour is on under
+                        tile.openWall(wallType: .bottom)
+                        neighbour.openWall(wallType: .top)
+                        
+                    } else {
+                        if neighbourPosition.x < selectedTilePosition.x { // Neighbour is on the left
+                            tile.openWall(wallType: .left)
+                            neighbour.openWall(wallType: .right)
+                        } else if neighbourPosition.x > selectedTilePosition.x {  // Neighbour is on the right
+                            tile.openWall(wallType: .right)
+                            neighbour.openWall(wallType: .left)
+                        }
+                    }
+                    
+                    // Mark neighbour as visited
+                    neighbour.status = .visited
+                    
                     // Add neighbour tile to list
+                    helperList.append(neighbourPosition)
                     
                 }
                 

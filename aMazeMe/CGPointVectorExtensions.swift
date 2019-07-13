@@ -66,6 +66,9 @@ extension CGPoint {
         return CGPoint(x: CGFloat.random(in: -1...1), y: CGFloat.random(in: -1...1)).forcedLength(length: totalLength)
     }
     
+    static func randomRoundedPoint(minX: Int, maxX: Int, minY: Int, maxY: Int) -> CGPoint {
+        return CGPoint(x: Int.random(in: minX...maxX), y: Int.random(in: minY...maxY))
+    }
     
     func toCGVector() -> CGVector {
         return CGVector(dx: x, dy: y)
