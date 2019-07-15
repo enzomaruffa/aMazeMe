@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		476865E022D7F7B900EED355 /* MazeTileStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 476865DF22D7F7B900EED355 /* MazeTileStatus.swift */; };
+		476865E222D9D5EB00EED355 /* GrowingTree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 476865E122D9D5EB00EED355 /* GrowingTree.swift */; };
 		47A70F5F22D4C071005BB824 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A70F5E22D4C071005BB824 /* AppDelegate.swift */; };
 		47A70F6122D4C071005BB824 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 47A70F6022D4C071005BB824 /* GameScene.sks */; };
 		47A70F6322D4C071005BB824 /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = 47A70F6222D4C071005BB824 /* Actions.sks */; };
@@ -27,6 +28,7 @@
 
 /* Begin PBXFileReference section */
 		476865DF22D7F7B900EED355 /* MazeTileStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MazeTileStatus.swift; sourceTree = "<group>"; };
+		476865E122D9D5EB00EED355 /* GrowingTree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrowingTree.swift; sourceTree = "<group>"; };
 		47A70F5B22D4C071005BB824 /* aMazeMe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = aMazeMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		47A70F5E22D4C071005BB824 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		47A70F6022D4C071005BB824 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
@@ -93,6 +95,7 @@
 				47A70F8622D66AEF005BB824 /* MazeTileTypes.swift */,
 				47A70F8822D66D05005BB824 /* CollisionMasks.swift */,
 				476865DF22D7F7B900EED355 /* MazeTileStatus.swift */,
+				476865E122D9D5EB00EED355 /* GrowingTree.swift */,
 			);
 			path = aMazeMe;
 			sourceTree = "<group>";
@@ -175,6 +178,7 @@
 				47A70F7D22D4D8AB005BB824 /* MazeTile.swift in Sources */,
 				47A70F7B22D4D82F005BB824 /* Maze.swift in Sources */,
 				476865E022D7F7B900EED355 /* MazeTileStatus.swift in Sources */,
+				476865E222D9D5EB00EED355 /* GrowingTree.swift in Sources */,
 				47A70F7822D4D663005BB824 /* SKNodeExtensions.swift in Sources */,
 				47A70F6722D4C071005BB824 /* GameViewController.swift in Sources */,
 				47A70F8722D66AEF005BB824 /* MazeTileTypes.swift in Sources */,

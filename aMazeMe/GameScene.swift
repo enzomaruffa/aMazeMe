@@ -34,7 +34,7 @@ class GameScene: SKScene {
         setBallProperties(ball: ball)
         scene?.addChild(ball)
         
-        let maze = Maze.growingTreeMaze(size: CGSize(width: 11, height: 23))
+        let maze = GrowingTreeAlgorithm.generateMaze(withSize: CGSize(width: 11, height: 23), using: GrowingTreeAlgorithm.recursiveBacktracking)
     
         var position: CGPoint = .zero
         var tileNode: SKShapeNode
