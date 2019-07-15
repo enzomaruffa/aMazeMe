@@ -21,12 +21,12 @@ class Maze: Codable {
         }
     }
     
-    var startingPosition: CGPoint
+    var startingPoint: CGPoint
+    var endingPoints: [CGPoint]
     
     var matrix: [[MazeTile]]
     
-    init(size: CGSize) {
-        
+    init(size: CGSize, startingPoint: CGPoint, endingPoints: [CGPoint]) {
         matrix = []
         
         for i in 0..<Int(size.height) {
@@ -36,13 +36,16 @@ class Maze: Codable {
             }
         }
         
-        startingPosition = .zero
+        self.startingPoint = startingPoint
+        self.endingPoints = endingPoints
         
-        
+        for endingPoint in endingPoints {
+            matrix[Int(endingPoint.y)][Int(endingPoint.x)].type = .completion
+        }
     }
     
     static func fullyRandomMaze(size: CGSize) -> Maze {
-        let maze = Maze(size: size)
+        let maze = Maze(size: size, startingPoint: .zero, endingPoints: [CGPoint(x: Int(size.width)-1, y: Int(size.height)-1)])
         
         for tileRow in maze.matrix {
             for tile in tileRow {
@@ -76,6 +79,7 @@ class Maze: Codable {
         
         return neighbours
     }
+    
     
 }
 

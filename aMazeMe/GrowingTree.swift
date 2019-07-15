@@ -11,8 +11,8 @@ import SpriteKit
 class GrowingTreeAlgorithm {
     
     // Reference: http://weblog.jamisbuck.org/2011/1/27/maze-generation-growing-tree-algorithm
-    static func generateMaze(withSize size: CGSize, using choosingFunction: ([CGPoint]) -> CGPoint) -> Maze {
-        let maze = Maze(size: size)
+    static func generateMaze(withSize size: CGSize, using choosingFunction: ([CGPoint]) -> CGPoint, startingIn startingPoint: CGPoint, andEndingIn endingPoints: [CGPoint]) -> Maze {
+        let maze = Maze(size: size, startingPoint: startingPoint, endingPoints: endingPoints)
         
         // Initializes the maze with all walls closed
         for tileRow in maze.matrix {
