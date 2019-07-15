@@ -14,6 +14,7 @@ class GrowingTreeAlgorithm {
     static func generateMaze(withSize size: CGSize, using choosingFunction: ([CGPoint]) -> CGPoint, startingIn startingPoint: CGPoint, andEndingIn endingPoints: [CGPoint]) -> Maze {
         let maze = Maze(size: size, startingPoint: startingPoint, endingPoints: endingPoints)
         
+        print("Geenrating maze with size", size, "starting  in", startingPoint, "and ending in", endingPoints)
         // Initializes the maze with all walls closed
         for tileRow in maze.matrix {
             for tile in tileRow {
@@ -25,8 +26,8 @@ class GrowingTreeAlgorithm {
         var helperList: [CGPoint] = []
         
         // Finds a random position that's currently not visited
-        var randomPosition = CGPoint.randomRoundedPoint(minX: 0, maxX: Int(size.width-1), minY: 0, maxY: Int(size.height-1))
-        var randomTile = maze.tile(in: randomPosition)
+        let randomPosition = CGPoint.randomRoundedPoint(minX: 0, maxX: Int(size.width-1), minY: 0, maxY: Int(size.height-1))
+        let randomTile = maze.tile(in: randomPosition)
         
 //        while randomTile.status != .normal {
 //            randomPosition = CGPoint.randomRoundedPoint(minX: 0, maxX: Int(size.width-1), minY: 0, maxY: Int(size.height-1))
@@ -37,21 +38,21 @@ class GrowingTreeAlgorithm {
         
         helperList.append(randomPosition)
         
-        print("Adding first position", randomPosition)
+//        print("Adding first position", randomPosition)
         
         while !helperList.isEmpty {
-            print("Running another iteration")
+//            print("Running another iteration")
             // Changing this logic completely changes the maze!
             let selectedTilePosition = choosingFunction(helperList)
             
-            print("Selected position", selectedTilePosition)
+//            print("Selected position", selectedTilePosition)
             
             let unvisitedNeighboursPositions = maze.getTileNeighbours(in: selectedTilePosition).filter( { maze.tile(in: $0).status == .normal } )
             
             // Gotta backtrack
             if unvisitedNeighboursPositions.isEmpty { // Every neighbour has already been visited
                 
-                print("    No neighbours, backtracking...")
+//                print("    No neighbours, backtracking...")
                 
                 // Mark tile as visited
                 let tile = maze.tile(in: selectedTilePosition)
@@ -63,7 +64,7 @@ class GrowingTreeAlgorithm {
                 // Get neighbour tile randomly
                 let neighbourPosition = unvisitedNeighboursPositions.randomElement()!
                 
-                print("    Neighbour position", neighbourPosition)
+//                print("    Neighbour position", neighbourPosition)
                 // Open walls between two tiles
                 let tile = maze.tile(in: selectedTilePosition)
                 let neighbour = maze.tile(in: neighbourPosition)

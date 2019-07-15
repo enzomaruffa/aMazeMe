@@ -25,13 +25,16 @@ class GameScene: SKScene {
     
     var playing = true
     
-    
     //        let mazeSize = CGSize(width: 11, height: 23)
-    let mazeSize = CGSize(width: 3, height: 7)
+    let mazeSize = CGSize(width: 3, height: 5)
+    
+    var maxPosition: CGPoint!
     
     override func didMove(to view: SKView) {
         
         self.backgroundColor = .black
+        
+        maxPosition = CGPoint(x: Int(mazeSize.width)-1, y: Int(mazeSize.height)-1)
         
         mazeRootNode = SKShapeNode(circleOfRadius: 0)
         scene?.addChild(mazeRootNode)
@@ -46,8 +49,15 @@ class GameScene: SKScene {
         setBallProperties(ball: ball)
         scene?.addChild(ball)
         
-        let maze = GrowingTreeAlgorithm.generateMaze(withSize: mazeSize, using: GrowingTreeAlgorithm.recursiveBacktracking, startingIn: .zero, andEndingIn: [CGPoint(x: Int(mazeSize.width)-1, y: Int(mazeSize.height)-1)])
+        let createdMaze = createMap(lastEndingPos: .zero)
+        
+        createCameraNode(createdMaze)
+        
+        // Add ball to scene
+        positionBall(inMaze: createdMaze)
+    }
     
+    func addMazeToNode(mazeRootNode: SKShapeNode, maze: Maze) {
         var position: CGPoint = .zero
         var tileNode: SKShapeNode
         
@@ -90,7 +100,7 @@ class GameScene: SKScene {
                 if tile.walls.contains(.bottom) {
                     addBottomWall(tile: tileNode)
                 }
-            
+                
                 tileNode.position = position
                 mazeRootNode.addChild(tileNode)
                 
@@ -98,11 +108,6 @@ class GameScene: SKScene {
             }
             position = CGPoint(x: 0, y: position.y + tileSize)
         }
-        
-        createCameraNode(maze)
-        
-        // Add ball to scene
-        positionBall(inMaze: maze)
     }
     
     func addLeftWall(tile: SKShapeNode) {
@@ -154,8 +159,8 @@ class GameScene: SKScene {
         ball.fillColor = .yellow
         ball.strokeColor = .yellow
         ball.physicsBody = SKPhysicsBody(circleOfRadius: ballRadius)
-        ball.physicsBody?.mass = 100
-        ball.physicsBody?.friction = 0.7
+        ball.physicsBody?.mass = 150
+        ball.physicsBody?.friction = 0.66
         ball.physicsBody?.linearDamping = 0.6
         ball.physicsBody?.collisionBitMask = CollisionMasks.CollisionBall
         ball.zPosition = 10
@@ -164,7 +169,6 @@ class GameScene: SKScene {
     func setWallProperties(wall: SKShapeNode) {
         wall.fillColor = .white
         wall.strokeColor = .white
-        wall.physicsBody?.mass = 10000
         wall.physicsBody?.collisionBitMask = CollisionMasks.CollisionMapElement
         wall.physicsBody?.isDynamic = false
         wall.physicsBody?.allowsRotation = false
@@ -215,26 +219,50 @@ class GameScene: SKScene {
         //cameraNode.position = ball.position
         
         if let endingTile = checkGameEnding() {
-            endMap(tile: endingTile)
+            print("Has ending")
+            if playing {
+                print("Is playing")
+                endMap(tile: endingTile)
+            }
         }
     }
     
     func endMap(tile: SKShapeNode) {
         scene?.physicsWorld.gravity = .zero
+        
         playing = false
+        self.endingNodes = []
+        
+        ball.physicsBody?.velocity = .zero
         ball.run(SKAction.move(to: tile.position, duration: 0.3))
-        mazeRootNode.run(SKAction.fadeAlpha(to: 0, duration: 1))
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+        
+        mazeRootNode.run(SKAction.fadeAlpha(to: 0, duration: 0.5))
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            
+            let lastPosition = tile.position / self.tileSize
+            
             self.mazeRootNode.removeAllChildren()
-            self.createMap(lastEndingPos: tile.position / self.tileSize)
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                self.createMap(lastEndingPos: lastPosition)
+            }
+        }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            self.mazeRootNode.run(SKAction.fadeAlpha(to: 1, duration: 1))
+            self.playing = true
         }
     }
     
-    func createMap(lastEndingPos: CGPoint) {
+    func createMap(lastEndingPos: CGPoint) -> Maze {
         // Create a new map
-        let maze = GrowingTreeAlgorithm.generateMaze(withSize: mazeSize, using: GrowingTreeAlgorithm.recursiveBacktracking, startingIn: lastEndingPos, andEndingIn: [.zero])
+        let endingPos: CGPoint = lastEndingPos == .zero ? maxPosition : .zero
+        let maze = GrowingTreeAlgorithm.generateMaze(withSize: mazeSize, using: GrowingTreeAlgorithm.recursiveBacktracking, startingIn: lastEndingPos, andEndingIn: [endingPos])
         
+        addMazeToNode(mazeRootNode: mazeRootNode, maze: maze)
         
+        return maze
     }
     
     func checkGameEnding() -> SKShapeNode? {
