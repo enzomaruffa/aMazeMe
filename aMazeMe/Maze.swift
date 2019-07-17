@@ -21,10 +21,10 @@ class Maze: Codable {
         }
     }
     
-    var startingPoint: CGPoint
-    var endingPoints: [CGPoint]
+    var startingPoint: CGPoint = .zero
+    var endingPoints: [CGPoint] = [.zero]
     
-    var matrix: [[MazeTile]]
+    var matrix: [[MazeTile]] = []
     
     init(size: CGSize, startingPoint: CGPoint, endingPoints: [CGPoint]) {
         matrix = []
@@ -42,6 +42,18 @@ class Maze: Codable {
         for endingPoint in endingPoints {
             matrix[Int(endingPoint.y)][Int(endingPoint.x)].type = .completion
         }
+    }
+    
+    init(fileName : String) {
+        // url, data and jsonData should not be nil
+        guard let url = Bundle.main.url(forResource: fileName, withExtension: "json") else { return }
+        guard let data = try? Data(contentsOf: url) else { return }
+        guard let jsonData = try? JSONDecoder().decode(Maze.self, from: data) else { return }
+        
+        // Set data from file
+        self.startingPoint = jsonData.startingPoint
+        self.matrix = jsonData.matrix
+        self.endingPoints = jsonData.endingPoints
     }
     
     static func fullyRandomMaze(size: CGSize) -> Maze {

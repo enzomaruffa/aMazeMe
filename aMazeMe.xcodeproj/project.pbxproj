@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		47212F5E22DF0302008EEFD8 /* SampleMaze.json in Resources */ = {isa = PBXBuildFile; fileRef = 47212F5D22DF0302008EEFD8 /* SampleMaze.json */; };
 		476865E022D7F7B900EED355 /* MazeTileStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 476865DF22D7F7B900EED355 /* MazeTileStatus.swift */; };
 		476865E222D9D5EB00EED355 /* GrowingTree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 476865E122D9D5EB00EED355 /* GrowingTree.swift */; };
 		47A70F5F22D4C071005BB824 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A70F5E22D4C071005BB824 /* AppDelegate.swift */; };
@@ -27,6 +28,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		47212F5D22DF0302008EEFD8 /* SampleMaze.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = SampleMaze.json; sourceTree = "<group>"; };
 		476865DF22D7F7B900EED355 /* MazeTileStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MazeTileStatus.swift; sourceTree = "<group>"; };
 		476865E122D9D5EB00EED355 /* GrowingTree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrowingTree.swift; sourceTree = "<group>"; };
 		47A70F5B22D4C071005BB824 /* aMazeMe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = aMazeMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -96,6 +98,7 @@
 				47A70F8822D66D05005BB824 /* CollisionMasks.swift */,
 				476865DF22D7F7B900EED355 /* MazeTileStatus.swift */,
 				476865E122D9D5EB00EED355 /* GrowingTree.swift */,
+				47212F5D22DF0302008EEFD8 /* SampleMaze.json */,
 			);
 			path = aMazeMe;
 			sourceTree = "<group>";
@@ -161,6 +164,7 @@
 				47A70F6A22D4C071005BB824 /* Main.storyboard in Resources */,
 				47A70F6122D4C071005BB824 /* GameScene.sks in Resources */,
 				47A70F6C22D4C075005BB824 /* Assets.xcassets in Resources */,
+				47212F5E22DF0302008EEFD8 /* SampleMaze.json in Resources */,
 				47A70F6F22D4C075005BB824 /* LaunchScreen.storyboard in Resources */,
 				47A70F6322D4C071005BB824 /* Actions.sks in Resources */,
 			);

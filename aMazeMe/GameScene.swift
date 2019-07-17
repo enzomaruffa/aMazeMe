@@ -26,7 +26,7 @@ class GameScene: SKScene {
     var playing = true
     
     //        let mazeSize = CGSize(width: 11, height: 23)
-    let mazeSize = CGSize(width: 3, height: 5)
+    let mazeSize = CGSize(width: 8, height: 20)
     
     var maxPosition: CGPoint!
     
@@ -181,11 +181,34 @@ class GameScene: SKScene {
     }
     
     fileprivate func createCameraNode(_ maze: Maze) {
-        let mazeCenter = CGPoint(x: tileSize * CGFloat(maze.width-1), y: tileSize * CGFloat(maze.height-1))/2
+        let totalMazeWidth = tileSize * CGFloat(maze.width-1)
+        let totalMazeHeight = tileSize * CGFloat(maze.height-1)
+        
+        let mazeCenter = CGPoint(x: totalMazeWidth, y:totalMazeHeight) / 2
         cameraNode = SKCameraNode()
         cameraNode.position = mazeCenter
         scene!.addChild(cameraNode)
         scene!.camera = cameraNode
+        
+        // Maze should be max 0.8 of the screen's height and 0.9 of screen's width
+        let viewFrame = scene?.view?.frame ?? CGRect(x: 0, y: 0, width: totalMazeWidth, height: totalMazeHeight)
+        
+        let widthProportion = totalMazeWidth / viewFrame.width
+        print("width propostion", widthProportion)
+        let heightProportion = totalMazeHeight / viewFrame.height
+        print("height propostion", heightProportion)
+        
+        let maxWidth: CGFloat = 0.9
+        let maxHeight: CGFloat = 0.8
+        
+        if widthProportion > heightProportion { //should scale width
+            print("setting scale by width", maxWidth / widthProportion)
+            cameraNode?.setScale( widthProportion / maxWidth )
+        } else { // shoud scale height
+            print("setting scale by height", maxHeight / heightProportion)
+            cameraNode?.setScale( heightProportion / maxHeight )
+        }
+        
     }
     
     func touchDown(atPoint pos : CGPoint) {
@@ -242,6 +265,7 @@ class GameScene: SKScene {
             
             let lastPosition = tile.position / self.tileSize
             
+            // Destroy map
             self.mazeRootNode.removeAllChildren()
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
@@ -258,7 +282,7 @@ class GameScene: SKScene {
     func createMap(lastEndingPos: CGPoint) -> Maze {
         // Create a new map
         let endingPos: CGPoint = lastEndingPos == .zero ? maxPosition : .zero
-        let maze = GrowingTreeAlgorithm.generateMaze(withSize: mazeSize, using: GrowingTreeAlgorithm.recursiveBacktracking, startingIn: lastEndingPos, andEndingIn: [endingPos])
+        let maze = Maze(fileName: "SampleMaze")//GrowingTreeAlgorithm.generateMaze(withSize: mazeSize, using: GrowingTreeAlgorithm.recursiveBacktracking, startingIn: lastEndingPos, andEndingIn: [endingPos])
         
         addMazeToNode(mazeRootNode: mazeRootNode, maze: maze)
         
