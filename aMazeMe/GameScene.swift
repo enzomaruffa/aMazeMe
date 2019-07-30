@@ -26,7 +26,7 @@ class GameScene: SKScene {
     var playing = true
     
     //        let mazeSize = CGSize(width: 11, height: 23)
-    let mazeSize = CGSize(width: 8, height: 20)
+    let mazeSize = CGSize(width: 9, height: 19)
     
     var maxPosition: CGPoint!
     
@@ -55,6 +55,12 @@ class GameScene: SKScene {
         
         // Add ball to scene
         positionBall(inMaze: createdMaze)
+        
+        
+        // Create counter
+        
+//        let counter = SKLabelNode()
+//        counter.text = "0"
     }
     
     func addMazeToNode(mazeRootNode: SKShapeNode, maze: Maze) {
@@ -159,9 +165,9 @@ class GameScene: SKScene {
         ball.fillColor = .yellow
         ball.strokeColor = .yellow
         ball.physicsBody = SKPhysicsBody(circleOfRadius: ballRadius)
-        ball.physicsBody?.mass = 150
+        ball.physicsBody?.mass = 120
         ball.physicsBody?.friction = 0.66
-        ball.physicsBody?.linearDamping = 0.6
+        ball.physicsBody?.linearDamping = 0.55
         ball.physicsBody?.collisionBitMask = CollisionMasks.CollisionBall
         ball.zPosition = 10
     }
@@ -172,6 +178,7 @@ class GameScene: SKScene {
         wall.physicsBody?.collisionBitMask = CollisionMasks.CollisionMapElement
         wall.physicsBody?.isDynamic = false
         wall.physicsBody?.allowsRotation = false
+        wall.physicsBody?.restitution = 0.275
         wall.zPosition = 7
     }
     
@@ -198,14 +205,14 @@ class GameScene: SKScene {
         let heightProportion = totalMazeHeight / viewFrame.height
         print("height propostion", heightProportion)
         
-        let maxWidth: CGFloat = 0.9
-        let maxHeight: CGFloat = 0.8
+        let maxWidth: CGFloat = 0.95
+        let maxHeight: CGFloat = 0.95
         
-        if widthProportion > heightProportion { //should scale width
-            print("setting scale by width", maxWidth / widthProportion)
+        if widthProportion < heightProportion { //should scale width
+            print("setting scale by width", widthProportion / maxWidth)
             cameraNode?.setScale( widthProportion / maxWidth )
         } else { // shoud scale height
-            print("setting scale by height", maxHeight / heightProportion)
+            print("setting scale by height", heightProportion / maxHeight)
             cameraNode?.setScale( heightProportion / maxHeight )
         }
         
@@ -282,7 +289,7 @@ class GameScene: SKScene {
     func createMap(lastEndingPos: CGPoint) -> Maze {
         // Create a new map
         let endingPos: CGPoint = lastEndingPos == .zero ? maxPosition : .zero
-        let maze = Maze(fileName: "SampleMaze")//GrowingTreeAlgorithm.generateMaze(withSize: mazeSize, using: GrowingTreeAlgorithm.recursiveBacktracking, startingIn: lastEndingPos, andEndingIn: [endingPos])
+        let maze = /*Maze(fileName: "SampleMaze")*/ GrowingTreeAlgorithm.generateMaze(withSize: mazeSize, using: GrowingTreeAlgorithm.recursiveBacktracking, startingIn: lastEndingPos, andEndingIn: [endingPos])
         
         addMazeToNode(mazeRootNode: mazeRootNode, maze: maze)
         
@@ -293,9 +300,12 @@ class GameScene: SKScene {
         return endingNodes.filter({ $0.contains(ball.position) }).first
     }
     
-    func updateGravity(gravity: CGVector) {
+    func updateGravity(data: CGVector) {
+        let gravity = data * 6.75 + (data.module() < 0.03 ? 0 : 0.5)
+        
         if playing {
-            scene?.physicsWorld.gravity = gravity
+            let newGravity = CGVector(dx: gravity.dx * gravity.dx * (gravity.dx/abs(gravity.dx) ), dy: gravity.dy * gravity.dy * (gravity.dy/abs(gravity.dy)))
+            scene?.physicsWorld.gravity = newGravity
         }
     }
 }

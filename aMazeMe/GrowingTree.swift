@@ -103,6 +103,10 @@ class GrowingTreeAlgorithm {
         return points.last!
     }
     
+    static func firstElement(points: [CGPoint]) -> CGPoint {
+        return points.first!
+    }
+    
     static func randomElement(points: [CGPoint]) -> CGPoint {
         return points.randomElement()!
     }

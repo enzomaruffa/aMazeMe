@@ -82,7 +82,7 @@ class GameViewController: UIViewController {
                                     
                                     // Use the accelerometer data in your app.
                                     if let scene = self.gameScene {
-                                        scene.updateGravity(gravity: CGVector(dx: x, dy: y) * 8)
+                                        scene.updateGravity(data: CGVector(dx: x, dy: y))
                                     }
                                     
                                 }
