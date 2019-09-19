@@ -11,13 +11,13 @@ import GameplayKit
 
 class GameScene: SKScene {
     
-    var ballRadius: CGFloat!
+    var ballRadius: CGFloat = GameConstants.instance.ballRadius
     
     var ball: SKShapeNode!
     var mazeRootNode: SKShapeNode!
     
-    var wallWidth: CGFloat!
-    var tileSize: CGFloat!
+    var wallWidth: CGFloat = GameConstants.instance.wallWidth
+    var tileSize: CGFloat = GameConstants.instance.tileSize
     
     var endingNodes: [SKShapeNode]! = []
     
@@ -30,18 +30,18 @@ class GameScene: SKScene {
     
     var maxPosition: CGPoint!
     
+    var counter: Int = 0
+    
+    var counterNode = SKLabelNode()
+    
     override func didMove(to view: SKView) {
-        
+        self.view?.ignoresSiblingOrder = true
         self.backgroundColor = .black
         
         maxPosition = CGPoint(x: Int(mazeSize.width)-1, y: Int(mazeSize.height)-1)
         
         mazeRootNode = SKShapeNode(circleOfRadius: 0)
         scene?.addChild(mazeRootNode)
-        
-        ballRadius = 15
-        wallWidth = 3
-        tileSize = (ballRadius * 2) + (wallWidth * 2) + CGFloat(15)
         
         scene?.physicsWorld.gravity = CGVector(dx: 0, dy: 0)
         
@@ -56,11 +56,13 @@ class GameScene: SKScene {
         // Add ball to scene
         positionBall(inMaze: createdMaze)
         
-        
         // Create counter
-        
-//        let counter = SKLabelNode()
-//        counter.text = "0"
+        counterNode.text = counter.description
+        counterNode.fontColor = .white
+        counterNode.fontSize = 200
+        counterNode.zPosition = 15
+        counterNode.alpha = 0
+        scene?.addChild(counterNode)
     }
     
     func addMazeToNode(mazeRootNode: SKShapeNode, maze: Maze) {
@@ -72,6 +74,10 @@ class GameScene: SKScene {
                 
                 tileNode = SKShapeNode(rectOf: CGSize(width: tileSize, height: tileSize))
                 tileNode.zPosition = 3
+                tileNode.name = "tile"
+                
+                tileNode.position = position
+                mazeRootNode.addChild(tileNode)
                 
                 if tile.type == .blank {
                     tileNode.fillColor = .black
@@ -107,9 +113,6 @@ class GameScene: SKScene {
                     addBottomWall(tile: tileNode)
                 }
                 
-                tileNode.position = position
-                mazeRootNode.addChild(tileNode)
-                
                 position = CGPoint(x: position.x + tileSize, y: position.y)
             }
             position = CGPoint(x: 0, y: position.y + tileSize)
@@ -117,47 +120,87 @@ class GameScene: SKScene {
     }
     
     func addLeftWall(tile: SKShapeNode) {
-        let wallSize = CGSize(width: wallWidth, height: tileSize + wallWidth/2)
-        let wallNode = SKShapeNode(rectOf: wallSize)
-        wallNode.physicsBody = SKPhysicsBody(rectangleOf: wallSize)
+        let wallPos = CGPoint(x: -tileSize/2, y: 0)
+        let nodesInPos = scene?.nodes(at: wallPos + tile.position)
         
-        setWallProperties(wall: wallNode)
+        print("Adding left wall: ")
+        print("  wallPos:", wallPos)
+        print("  wallPosInScene:", wallPos - tile.position + tile.positionInScene!)
         
-        wallNode.position = CGPoint(x: -tileSize/2, y: 0)
-        tile.addChild(wallNode)
+        if !(nodesInPos?.contains(where: {$0.name == "wall"} ) ?? false) {
+            let wallSize = CGSize(width: wallWidth, height: tileSize + wallWidth/2)
+            let wallNode = SKShapeNode(rectOf: wallSize)
+            wallNode.physicsBody = SKPhysicsBody(rectangleOf: wallSize)
+            
+            setWallProperties(wall: wallNode)
+            
+            wallNode.position = wallPos
+            
+            tile.addChild(wallNode)
+        }
+        
     }
     
     func addTopWall(tile: SKShapeNode) {
-        let wallSize = CGSize(width: tileSize + wallWidth/2, height: wallWidth)
-        let wallNode = SKShapeNode(rectOf: wallSize)
-        wallNode.physicsBody = SKPhysicsBody(rectangleOf: wallSize)
+        let wallPos =  CGPoint(x: 0, y: -tileSize/2)
+        let nodesInPos = scene?.nodes(at: wallPos + tile.position)
         
-        setWallProperties(wall: wallNode)
+        print("Adding top wall: ")
+        print("  wallPos:", wallPos)
+        print("  wallPosInScene:", wallPos - tile.position + tile.positionInScene!)
         
-        wallNode.position = CGPoint(x: 0, y: -tileSize/2)
-        tile.addChild(wallNode)
+        if !(nodesInPos?.contains(where: {$0.name == "wall"} ) ?? false) {
+            
+            let wallSize = CGSize(width: tileSize + wallWidth/2, height: wallWidth)
+            let wallNode = SKShapeNode(rectOf: wallSize)
+            wallNode.physicsBody = SKPhysicsBody(rectangleOf: wallSize)
+            
+            setWallProperties(wall: wallNode)
+            
+            wallNode.position = wallPos
+            tile.addChild(wallNode)
+        }
     }
     
     func addRightWall(tile: SKShapeNode) {
-        let wallSize = CGSize(width: wallWidth, height: tileSize + wallWidth/2)
-        let wallNode = SKShapeNode(rectOf: wallSize)
-        wallNode.physicsBody = SKPhysicsBody(rectangleOf: wallSize)
+        let wallPos =  CGPoint(x: tileSize/2, y: 0)
+        let nodesInPos = scene?.nodes(at: wallPos + tile.position)
         
-        setWallProperties(wall: wallNode)
+        print("Adding right wall: ")
+        print("  wallPos:", wallPos)
+        print("  wallPosInScene:", wallPos - tile.position + tile.positionInScene!)
         
-        wallNode.position = CGPoint(x: tileSize/2, y: 0)
-        tile.addChild(wallNode)
+        if !(nodesInPos?.contains(where: {$0.name == "wall"} ) ?? false) {
+            let wallSize = CGSize(width: wallWidth, height: tileSize + wallWidth/2)
+            let wallNode = SKShapeNode(rectOf: wallSize)
+            wallNode.physicsBody = SKPhysicsBody(rectangleOf: wallSize)
+            
+            setWallProperties(wall: wallNode)
+            
+            wallNode.position = wallPos
+            tile.addChild(wallNode)
+        }
     }
     
     func addBottomWall(tile: SKShapeNode) {
-        let wallSize = CGSize(width: tileSize + wallWidth/2, height: wallWidth)
-        let wallNode = SKShapeNode(rectOf: wallSize)
-        wallNode.physicsBody = SKPhysicsBody(rectangleOf: wallSize)
+        let wallPos = CGPoint(x: 0, y: tileSize/2)
+        let nodesInPos = scene?.nodes(at: wallPos + tile.position)
         
-        setWallProperties(wall: wallNode)
+        print("Adding bottom wall: ")
+        print("  wallPos:", wallPos)
+        print("  wallPosInScene:", wallPos - tile.position + tile.positionInScene!)
         
-        wallNode.position = CGPoint(x: 0, y: tileSize/2)
-        tile.addChild(wallNode)
+        if !(nodesInPos?.contains(where: {$0.name == "wall"} ) ?? false) {
+            
+            let wallSize = CGSize(width: tileSize + wallWidth/2, height: wallWidth)
+            let wallNode = SKShapeNode(rectOf: wallSize)
+            wallNode.physicsBody = SKPhysicsBody(rectangleOf: wallSize)
+            
+            setWallProperties(wall: wallNode)
+            
+            wallNode.position = wallPos
+            tile.addChild(wallNode)
+        }
     }
     
     
@@ -180,6 +223,7 @@ class GameScene: SKScene {
         wall.physicsBody?.allowsRotation = false
         wall.physicsBody?.restitution = 0.275
         wall.zPosition = 7
+        wall.name = "wall"
     }
     
     func positionBall(inMaze maze: Maze) {
@@ -274,6 +318,11 @@ class GameScene: SKScene {
             
             // Destroy map
             self.mazeRootNode.removeAllChildren()
+            
+            self.counter += 1
+            self.counterNode.position = CGPoint(x: (self.scene?.view?.frame.width)!/2, y: -300)
+            self.counterNode.run(SKAction.fadeAlpha(to: 1, duration: 0.5))
+            self.counterNode.text = self.counter.description
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                 self.createMap(lastEndingPos: lastPosition)

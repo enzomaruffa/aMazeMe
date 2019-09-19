@@ -10,6 +10,9 @@
 		47212F5E22DF0302008EEFD8 /* SampleMaze.json in Resources */ = {isa = PBXBuildFile; fileRef = 47212F5D22DF0302008EEFD8 /* SampleMaze.json */; };
 		476865E022D7F7B900EED355 /* MazeTileStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 476865DF22D7F7B900EED355 /* MazeTileStatus.swift */; };
 		476865E222D9D5EB00EED355 /* GrowingTree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 476865E122D9D5EB00EED355 /* GrowingTree.swift */; };
+		479CEE5F23326EA9006EBEE1 /* SKSceneExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 479CEE5D23326EA9006EBEE1 /* SKSceneExtensions.swift */; };
+		479CEE61233409CD006EBEE1 /* MazeGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 479CEE60233409CD006EBEE1 /* MazeGraph.swift */; };
+		479CEE63233409E4006EBEE1 /* MazeGraphNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 479CEE62233409E4006EBEE1 /* MazeGraphNode.swift */; };
 		47A70F5F22D4C071005BB824 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A70F5E22D4C071005BB824 /* AppDelegate.swift */; };
 		47A70F6122D4C071005BB824 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 47A70F6022D4C071005BB824 /* GameScene.sks */; };
 		47A70F6322D4C071005BB824 /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = 47A70F6222D4C071005BB824 /* Actions.sks */; };
@@ -25,12 +28,16 @@
 		47A70F8522D66AB8005BB824 /* WallEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A70F8422D66AB7005BB824 /* WallEnums.swift */; };
 		47A70F8722D66AEF005BB824 /* MazeTileTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A70F8622D66AEF005BB824 /* MazeTileTypes.swift */; };
 		47A70F8922D66D05005BB824 /* CollisionMasks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A70F8822D66D05005BB824 /* CollisionMasks.swift */; };
+		47C25EE923297ACC00755BCC /* GameConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C25EE823297ACC00755BCC /* GameConstants.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		47212F5D22DF0302008EEFD8 /* SampleMaze.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = SampleMaze.json; sourceTree = "<group>"; };
 		476865DF22D7F7B900EED355 /* MazeTileStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MazeTileStatus.swift; sourceTree = "<group>"; };
 		476865E122D9D5EB00EED355 /* GrowingTree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrowingTree.swift; sourceTree = "<group>"; };
+		479CEE5D23326EA9006EBEE1 /* SKSceneExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKSceneExtensions.swift; sourceTree = "<group>"; };
+		479CEE60233409CD006EBEE1 /* MazeGraph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MazeGraph.swift; sourceTree = "<group>"; };
+		479CEE62233409E4006EBEE1 /* MazeGraphNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MazeGraphNode.swift; sourceTree = "<group>"; };
 		47A70F5B22D4C071005BB824 /* aMazeMe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = aMazeMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		47A70F5E22D4C071005BB824 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		47A70F6022D4C071005BB824 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
@@ -48,6 +55,7 @@
 		47A70F8422D66AB7005BB824 /* WallEnums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WallEnums.swift; sourceTree = "<group>"; };
 		47A70F8622D66AEF005BB824 /* MazeTileTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MazeTileTypes.swift; sourceTree = "<group>"; };
 		47A70F8822D66D05005BB824 /* CollisionMasks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollisionMasks.swift; sourceTree = "<group>"; };
+		47C25EE823297ACC00755BCC /* GameConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameConstants.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,6 +69,47 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		479CEE64233409F5006EBEE1 /* MazeGraph */ = {
+			isa = PBXGroup;
+			children = (
+				479CEE60233409CD006EBEE1 /* MazeGraph.swift */,
+				479CEE62233409E4006EBEE1 /* MazeGraphNode.swift */,
+			);
+			path = MazeGraph;
+			sourceTree = "<group>";
+		};
+		479CEE6523340A00006EBEE1 /* Maze */ = {
+			isa = PBXGroup;
+			children = (
+				476865E122D9D5EB00EED355 /* GrowingTree.swift */,
+				47A70F7A22D4D82F005BB824 /* Maze.swift */,
+				47A70F7C22D4D8AB005BB824 /* MazeTile.swift */,
+				47A70F8622D66AEF005BB824 /* MazeTileTypes.swift */,
+				476865DF22D7F7B900EED355 /* MazeTileStatus.swift */,
+				47A70F8422D66AB7005BB824 /* WallEnums.swift */,
+			);
+			path = Maze;
+			sourceTree = "<group>";
+		};
+		479CEE6623340A0D006EBEE1 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				479CEE6523340A00006EBEE1 /* Maze */,
+				479CEE64233409F5006EBEE1 /* MazeGraph */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		479CEE6723340A1C006EBEE1 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				47A70F7722D4D663005BB824 /* CGPointVectorExtensions.swift */,
+				47A70F7622D4D663005BB824 /* SKNodeExtensions.swift */,
+				479CEE5D23326EA9006EBEE1 /* SKSceneExtensions.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		47A70F5222D4C071005BB824 = {
 			isa = PBXGroup;
 			children = (
@@ -80,8 +129,7 @@
 		47A70F5D22D4C071005BB824 /* aMazeMe */ = {
 			isa = PBXGroup;
 			children = (
-				47A70F7722D4D663005BB824 /* CGPointVectorExtensions.swift */,
-				47A70F7622D4D663005BB824 /* SKNodeExtensions.swift */,
+				479CEE6723340A1C006EBEE1 /* Extensions */,
 				47A70F5E22D4C071005BB824 /* AppDelegate.swift */,
 				47A70F6022D4C071005BB824 /* GameScene.sks */,
 				47A70F6222D4C071005BB824 /* Actions.sks */,
@@ -91,14 +139,10 @@
 				47A70F6B22D4C075005BB824 /* Assets.xcassets */,
 				47A70F6D22D4C075005BB824 /* LaunchScreen.storyboard */,
 				47A70F7022D4C075005BB824 /* Info.plist */,
-				47A70F7A22D4D82F005BB824 /* Maze.swift */,
-				47A70F7C22D4D8AB005BB824 /* MazeTile.swift */,
-				47A70F8422D66AB7005BB824 /* WallEnums.swift */,
-				47A70F8622D66AEF005BB824 /* MazeTileTypes.swift */,
+				479CEE6623340A0D006EBEE1 /* Model */,
 				47A70F8822D66D05005BB824 /* CollisionMasks.swift */,
-				476865DF22D7F7B900EED355 /* MazeTileStatus.swift */,
-				476865E122D9D5EB00EED355 /* GrowingTree.swift */,
 				47212F5D22DF0302008EEFD8 /* SampleMaze.json */,
+				47C25EE823297ACC00755BCC /* GameConstants.swift */,
 			);
 			path = aMazeMe;
 			sourceTree = "<group>";
@@ -180,14 +224,18 @@
 				47A70F7922D4D663005BB824 /* CGPointVectorExtensions.swift in Sources */,
 				47A70F6522D4C071005BB824 /* GameScene.swift in Sources */,
 				47A70F7D22D4D8AB005BB824 /* MazeTile.swift in Sources */,
+				479CEE63233409E4006EBEE1 /* MazeGraphNode.swift in Sources */,
+				479CEE5F23326EA9006EBEE1 /* SKSceneExtensions.swift in Sources */,
 				47A70F7B22D4D82F005BB824 /* Maze.swift in Sources */,
 				476865E022D7F7B900EED355 /* MazeTileStatus.swift in Sources */,
 				476865E222D9D5EB00EED355 /* GrowingTree.swift in Sources */,
 				47A70F7822D4D663005BB824 /* SKNodeExtensions.swift in Sources */,
+				47C25EE923297ACC00755BCC /* GameConstants.swift in Sources */,
 				47A70F6722D4C071005BB824 /* GameViewController.swift in Sources */,
 				47A70F8722D66AEF005BB824 /* MazeTileTypes.swift in Sources */,
 				47A70F5F22D4C071005BB824 /* AppDelegate.swift in Sources */,
 				47A70F8922D66D05005BB824 /* CollisionMasks.swift in Sources */,
+				479CEE61233409CD006EBEE1 /* MazeGraph.swift in Sources */,
 				47A70F8522D66AB8005BB824 /* WallEnums.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
